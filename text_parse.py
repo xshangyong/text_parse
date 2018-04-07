@@ -5,7 +5,6 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 def strQ2B(ustring):
-    """全角转半角"""
     rstring = ""
     for uchar in ustring:
         inside_code=ord(uchar)
@@ -18,7 +17,6 @@ def strQ2B(ustring):
     return rstring
     
 def strB2Q(ustring):
-    """半角转全角"""
     rstring = ""
     for uchar in ustring:
         inside_code=ord(uchar)
@@ -30,7 +28,7 @@ def strB2Q(ustring):
         rstring += unichr(inside_code)
     return rstring
 
-fd = open("1.txt","r+") #comment	
+fd = open("111.txt","r+") #comment	
 fw= open("fw.txt","w+") #comment	
 ft= open("ft.txt","w+") #comment	
 result = open("2.txt","w+")
@@ -42,17 +40,11 @@ i = 0
 for line in full_txt:
 	res = re.search(r'^\s+$', line, )
 	if res :
-		print "line %d empty" % (full_txt.index(line))  
-		i = 0
-	else :
-		if i == 0 :
-			print "line %d not empty" % (full_txt.index(line))  
-			clear_line.append(line)
-		else :
-			clear_line[len(clear_line) - 1] = clear_line[len(clear_line) - 1] + line
 		i = 1
+	else :
+		clear_line.append(line)
 
-print len(clear_line)
+print "len of clear line is " , len(clear_line)
 
 info_res = []
 info_dic = {}
@@ -63,6 +55,7 @@ result.write('序号\t活动类型\t活动内容\t时间\t嘉宾\t地点\t所属
 for index in range(len(clear_line)) :
 	print "index = %d:" % (index)
 	tmp_str=clear_line[index].decode('gbk').encode('utf-8')
+	ft.write(tmp_str)
 #	标题
 	tmp = ""
 	res = re.search(r'(?<=【).+?(?=】)' , tmp_str , )
@@ -70,64 +63,47 @@ for index in range(len(clear_line)) :
 		tmp = res.group()
 		info_res.append(tmp)
 		info_dic['name'] = tmp
-		print "has title "
-	else:
-		print "no title"
 #	时间   2018年4月3日（周二）14:00  转换为  3.31（周六）
 #	res = re.search(r'(?<=】\d\d\d\d年).+?）' , tmp_str , )
 	tmp = ""	
-	res = re.search(r'(?<=年).+?(?=月)' , tmp_str , )
+	res = re.search(r'(?<=\d\d\d\d年)\d{1,2}(?=月)' , tmp_str , )
 	if res :
 		tmp = res.group()
-	else :
-		print "no month"
-	res = re.search(r'(?<=月).+?(?=日)' , tmp_str , )
+	res = re.search(r'(?<=月)\d{1,2}?(?=日)' , tmp_str , )
 	if res :
 		tmp =tmp + "." + res.group()
-	else :
-		print "no day"
-	res = re.search(r'(?<=日).+?）' , tmp_str , )
+	res = re.search(r'(（|\()(周.+?)(）|\))' , tmp_str , )
 	if res :
 		tmp =tmp + res.group()
-	else :
-		print "no week"
 		# 转换时间为 2.3(周一)
 #		res = re.search(r'(?<=年).+?(?=日)' , tmp_str , )
 	info_res.append(tmp)
 	info_dic['time'] = tmp
-	print "has time "		
-	res = re.search(r'(?<=(【主讲】)|(【嘉宾】)).+?(?=【)' , tmp_str , )
+	tmp = ""
+	res = re.search(r'(?<=(主讲】)|(嘉宾】)|(术家】)|(讲人】)).+?(?=【))' , tmp_str , )
 	if res :
 		tmp = res.group()
 		info_res.append(tmp)
 		info_dic['speecher'] = tmp
-		print "has speecher "
 	else:
-		res = re.search(r'(?<=(【主讲】)|(【嘉宾】)).+' , tmp_str , )
+		res = re.search(r'(?<=(【主讲】)|(【嘉宾】|(讲人】))).+' , tmp_str , )
 		if res :
 			tmp = res.group()
 			info_res.append(tmp)
 			info_dic['speecher'] = tmp
-			print "has speecher "
-		else:
-			print "no speecher"	
 
-	res = re.search(r'(?<=【地点】).+?(?=【)' , tmp_str , )
+	res = re.search(r'(?<=(地点】)|(的地】)).+?(?=【)' , tmp_str , )
 	if res :
 		tmp = res.group()
 		info_res.append(tmp)
 		info_dic['location'] = tmp
-		print "has location "
 	else:
-		res = re.search(r'(?<=【地点】).+' , tmp_str , )
+		res = re.search(r'(?<=(地点】)|(的地】)).+' , tmp_str , )
 		if res :
 			tmp = res.group()
 			info_res.append(tmp)
 			info_dic['location'] = tmp
-			print "has location "
-		else:
-			print "no location"	
-	if info_dic.has_key('name') and info_dic.has_key('time')  and info_dic.has_key('location'):
+	if info_dic.has_key('name') and info_dic['time'] != "": # and info_dic.has_key('location'):
 		if info_dic.has_key('name') :
 			ft.write(info_dic['name'])
 			ft.write('\n')
@@ -168,6 +144,5 @@ ft.close()
 
 
 result.close()
-
 
 
