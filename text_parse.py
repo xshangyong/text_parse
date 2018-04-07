@@ -28,7 +28,7 @@ def strB2Q(ustring):
         rstring += unichr(inside_code)
     return rstring
 
-fd = open("111.txt","r+") #comment	
+fd = open("1.txt","r+") #comment	
 fw= open("fw.txt","w+") #comment	
 ft= open("ft.txt","w+") #comment	
 result = open("2.txt","w+")
@@ -80,13 +80,13 @@ for index in range(len(clear_line)) :
 	info_res.append(tmp)
 	info_dic['time'] = tmp
 	tmp = ""
-	res = re.search(r'(?<=(主讲】)|(嘉宾】)|(术家】)|(讲人】)).+?(?=【))' , tmp_str , )
+	res = re.search(r'(?<=(主讲】)|(嘉宾】)|(术家】)|(讲人】)).+?(?=【)' , tmp_str , )
 	if res :
 		tmp = res.group()
 		info_res.append(tmp)
 		info_dic['speecher'] = tmp
 	else:
-		res = re.search(r'(?<=(【主讲】)|(【嘉宾】|(讲人】))).+' , tmp_str , )
+		res = re.search(r'(?<=(主讲】)|(嘉宾】)|(术家】)|(讲人】)).+' , tmp_str , )
 		if res :
 			tmp = res.group()
 			info_res.append(tmp)
