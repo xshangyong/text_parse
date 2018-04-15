@@ -4,14 +4,19 @@ import time
 import calendar 
 
 def get_district(location_str):
-    district_pattern = re.compile(r'(海淀)|(北京大学)|(清华大学)|(首图)|(航空航天大学)|(北京外国语)|(北京师范大学)|(中国人民大学)|(北京语言大学)|(中国科学信息技术研究所)|(凯迪拉克中心)|(三堡学术基地)')
-    res = district_pattern.search(location_str)
+    haidian_pattern = re.compile(r'(海淀)|(北京大学)|(清华大学)|(首图)|(航空航天大学)|(北京外国语)|(北京师范大学)|(中国人民大学)|(北京语言大学)|(中国科学信息技术研究所)|(凯迪拉克中心)|(三堡学术基地)|(国话先锋剧场)|(国图艺术中心)|(海淀剧院)|(红剧场)|(华侨城大剧院)|(五棵松)')
+    nothaidian_pattern = re.compile(r'(国家大剧院)|(假日经典小剧场)|(A33小剧场)|(Blue Note Beijing)|(保利剧院)|(北京天桥艺术中心)|(北京喜剧院)|(北京音乐厅)|(博纳星辉剧院)|(超剧场)|(地质礼堂剧场)|(东方梅地亚中心M剧场)|(繁星戏剧村)|(工人俱乐部)|(国家大剧院)|(假日经典小剧场)|(菊隐剧场)|(老舍茶馆)|(隆福剧场)|(梅兰芳大剧院)|(民族文化宫大剧院)|(蓬蒿剧场)|(青蓝剧场)|(人艺实验剧场)|(世纪剧院)|(天桥剧场)|(长安大戏院)|(正乙祠戏楼)|(中国儿童剧场)|(中国国家话剧院国话剧场)|(中国木偶剧院)|(中山音乐堂)')
+
+    res = haidian_pattern.search(location_str)
     if res :
         print ("in 海淀")
         return "海淀"
     else :
-        print ("not in 海淀")
-        return "其他"
+        res = nothaidian_pattern.search(location_str)
+        if res : 
+            print ("not in 海淀")
+            return "非海淀"
+    return ""
 
 def get_activity_type(name_str):
     exhibition_pattern = re.compile(r'(展览)|(个人展)|(首展)')
