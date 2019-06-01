@@ -7,7 +7,7 @@ import gd
 
 
 def get_format_time(time_str):
-	res = re.search(r'\d\d(?=月)|(?<=2018\.0)[1-9](?=\.)', time_str, )
+	res = re.search(r'\d\d(?=月)|(?<=2019\.0)[1-9](?=\.)', time_str, )
 	if res :
 		mon = res.group();
 		if mon[0] == "0":
@@ -19,19 +19,19 @@ def get_format_time(time_str):
 			if day[0] == "0":
 				day = day[1]
 			print (day) 
-			if((calendar.weekday(2018, int(mon), int(day))) == 0) :
+			if((calendar.weekday(2019, int(mon), int(day))) == 0) :
 				weekday = "（周一）"
-			elif((calendar.weekday(2018, int(mon), int(day))) == 1): 
+			elif((calendar.weekday(2019, int(mon), int(day))) == 1): 
 				weekday = "（周二）"
-			elif((calendar.weekday(2018, int(mon), int(day))) == 2):
+			elif((calendar.weekday(2019, int(mon), int(day))) == 2):
 				weekday = "（周三）"
-			elif((calendar.weekday(2018, int(mon), int(day))) == 3):
+			elif((calendar.weekday(2019, int(mon), int(day))) == 3):
 				weekday = "（周四）"
-			elif((calendar.weekday(2018, int(mon), int(day))) == 4):
+			elif((calendar.weekday(2019, int(mon), int(day))) == 4):
 				weekday = "（周五）"
-			elif((calendar.weekday(2018, int(mon), int(day))) == 5):
+			elif((calendar.weekday(2019, int(mon), int(day))) == 5):
 				weekday = "（周六）"
-			elif((calendar.weekday(2018, int(mon), int(day))) == 6):
+			elif((calendar.weekday(2019, int(mon), int(day))) == 6):
 				weekday = "（周日）"
 			return mon + "." + day + weekday
 	return "" 
@@ -54,11 +54,13 @@ def parse3():
 	info_dic = {}
 	result.write('序号\t活动类型\t活动内容\t时间\t嘉宾\t地点\t所属类型\n')
 	number = 1
+	first = 1
 	
 	for ix in range(len(full_txt)):
 		tmp_str  = full_txt[ix]
 		res = re.search(r'人感兴趣', tmp_str, )
-		if res :
+
+		if res or first == 1 :
 			if 'location' in info_dic and 'name' in info_dic:
 				result.write("%d" % (number))
 				number = number + 1
@@ -81,7 +83,8 @@ def parse3():
 			else :
 				print ("line %d empty" % (ix))  
 				print (full_txt[ix])
-			start = 1; 
+			start = 1;
+			first = 0;
 			info_dic.clear()
 		else :
 			res = re.search(r'^\s+$', tmp_str, )
@@ -108,7 +111,7 @@ def parse3():
 						tmp = get_format_time(res.group())
 						# two kinds format of time
 						# 时间： 05月20日 周日 09:30-12:00
-						# 时间： 2018年05月13日 ~ 2018年06月24日 每周日 17:00 - 18:30
+						# 时间： 2019年05月13日 ~ 2019年06月24日 每周日 17:00 - 18:30
 						if tmp != "":
 							info_dic['time'] = tmp
 							print (tmp)

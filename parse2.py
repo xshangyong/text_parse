@@ -7,7 +7,7 @@ import gd
 
 
 def get_format_time(time_str):
-    res = re.search(r'(?<=2018\.)[12][0-9](?=\.)|(?<=2018\.0)[1-9](?=\.)', time_str, )
+    res = re.search(r'(?<=2019\.)[12][0-9](?=\.)|(?<=2019\.0)[1-9](?=\.)', time_str, )
     if res :
         mon = res.group();
         print (mon) 
@@ -15,19 +15,19 @@ def get_format_time(time_str):
         if res :
             day = res.group();
             print (day) 
-            if((calendar.weekday(2018, int(mon), int(day))) == 0) :
+            if((calendar.weekday(2019, int(mon), int(day))) == 0) :
                 weekday = "（周一）"
-            elif((calendar.weekday(2018, int(mon), int(day))) == 1): 
+            elif((calendar.weekday(2019, int(mon), int(day))) == 1): 
                 weekday = "（周二）"
-            elif((calendar.weekday(2018, int(mon), int(day))) == 2):
+            elif((calendar.weekday(2019, int(mon), int(day))) == 2):
                 weekday = "（周三）"
-            elif((calendar.weekday(2018, int(mon), int(day))) == 3):
+            elif((calendar.weekday(2019, int(mon), int(day))) == 3):
                 weekday = "（周四）"
-            elif((calendar.weekday(2018, int(mon), int(day))) == 4):
+            elif((calendar.weekday(2019, int(mon), int(day))) == 4):
                 weekday = "（周五）"
-            elif((calendar.weekday(2018, int(mon), int(day))) == 5):
+            elif((calendar.weekday(2019, int(mon), int(day))) == 5):
                 weekday = "（周六）"
-            elif((calendar.weekday(2018, int(mon), int(day))) == 6):
+            elif((calendar.weekday(2019, int(mon), int(day))) == 6):
                 weekday = "（周日）"
             return mon + "." + day + weekday
     return "" 
@@ -53,7 +53,7 @@ def parse2():
 	
 	for ix in range(len(full_txt)):
 		tmp_str  = full_txt[ix]
-		res = re.search(r'^\s+$', tmp_str, )
+		res = re.search(r'^在线订票$', tmp_str, )
 		if res :
 			if i >= 3 and 'name' in info_dic:
 				result.write("%d" % (number))

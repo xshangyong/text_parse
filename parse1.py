@@ -23,34 +23,35 @@ def get_activity_type(name_str):
     return ""
 
 def get_format_time(time_str):
-    res = re.search(r'(?<=2018年)[12][0-9](?=月)|(?<=2018年0)[1-9](?=月)|(?<=2018年)[1-9](?=月)', time_str, )
-    if res :
-        mon = res.group();
-        print (mon) 
-        res = re.search(r'(?<=\d月)[123][0-9]|(?<=日)|(?<=\d月0)[1-9]|(?<=日)|(?<=\d月)[1-9]|(?<=日)', time_str, )
-        if res :
-            day = res.group();
-            print (day) 
-            if((calendar.weekday(2018, int(mon), int(day))) == 0) :
-                weekday = "（周一）"
-            elif((calendar.weekday(2018, int(mon), int(day))) == 1): 
-                weekday = "（周二）"
-            elif((calendar.weekday(2018, int(mon), int(day))) == 2):
-                weekday = "（周三）"
-            elif((calendar.weekday(2018, int(mon), int(day))) == 3):
-                weekday = "（周四）"
-            elif((calendar.weekday(2018, int(mon), int(day))) == 4):
-                weekday = "（周五）"
-            elif((calendar.weekday(2018, int(mon), int(day))) == 5):
-                weekday = "（周六）"
-            elif((calendar.weekday(2018, int(mon), int(day))) == 6):
-                weekday = "（周日）"
-            return mon + "." + day + weekday
-        else :
-            print ("no day")
-    else :
-        print ("no month")
-    return "" 
+	print(time_str)
+	res = re.search(r'(?<=2019年)[12][0-9](?=月)|(?<=2019年0)[1-9](?=月)|(?<=2019年)[1-9](?=月)', time_str, )
+	if res :
+		mon = res.group();
+		print (mon) 
+		res = re.search(r'(?<=\d月)[123][0-9](?=日)|(?<=\d月0)[1-9](?=日)|(?<=\d月)[1-9](?=日)', time_str, )
+		if res :
+			day = res.group();
+			print (day) 
+			if((calendar.weekday(2019, int(mon), int(day))) == 0) :
+				weekday = "（周一）"
+			elif((calendar.weekday(2019, int(mon), int(day))) == 1): 
+				weekday = "（周二）"
+			elif((calendar.weekday(2019, int(mon), int(day))) == 2):
+				weekday = "（周三）"
+			elif((calendar.weekday(2019, int(mon), int(day))) == 3):
+				weekday = "（周四）"
+			elif((calendar.weekday(2019, int(mon), int(day))) == 4):
+				weekday = "（周五）"
+			elif((calendar.weekday(2019, int(mon), int(day))) == 5):
+				weekday = "（周六）"
+			elif((calendar.weekday(2019, int(mon), int(day))) == 6):
+				weekday = "（周日）"
+			return mon + "." + day + weekday
+		else :
+			print ("no day")
+	else :
+		print ("no month")
+	return "" 
 
 
 
@@ -83,7 +84,7 @@ def parse1():
 	tmp_str = ""
 	
 	number = 1
-	result.write('序号\t活动类型\t活动内容\t时间\t嘉宾\t地点\t所属类型\n区')
+	result.write('序号\t活动类型\t活动内容\t时间\t嘉宾\t地点\t所属类型\t区\n')
 	for index in range(len(clear_line)) :
 	#    print ("index = %d:" % (index))
 		tmp_str = clear_line[index]
